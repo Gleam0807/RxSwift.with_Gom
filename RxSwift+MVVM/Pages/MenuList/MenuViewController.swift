@@ -29,6 +29,10 @@ class MenuViewController: UIViewController {
                     cell.title.text = item.name
                     cell.price.text = "\(item.price)"
                     cell.count.text = "\(item.count)"
+                    
+                    cell.onChange = { [weak self] increase in
+                        self?.viewModel.changeCount(item: item, increase: increase)
+                    }
                 }
             .disposed(by: disposeBag)
         
@@ -75,10 +79,12 @@ class MenuViewController: UIViewController {
         // showAlert("Order Fail", "No Orders")
         //performSegue(withIdentifier: "OrderViewController", sender: nil)
         
-        viewModel.menuObservable.onNext([
-            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
-            Menu(name: "changed2", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
-            Menu(name: "changed3", price: Int.random(in: 100...1000), count: Int.random(in: 0...3))
-        ])
+//        viewModel.menuObservable.onNext([
+//            Menu(id: 0, name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
+//            Menu(id: 1, name: "changed2", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
+//            Menu(id: 2, name: "changed3", price: Int.random(in: 100...1000), count: Int.random(in: 0...3))
+//        ])
+        
+        viewModel.onOrder()
     }
 }
